@@ -1,55 +1,40 @@
 <script>
-  function addStreamStopListener(stream, callback) {
-    stream.addEventListener(
-      'ended',
-      function () {
-        console.log('stream ended');
-        callback();
-        callback = function () {};
-      },
-      false
-    );
-    stream.addEventListener(
-      'inactive',
-      function () {
-        console.log('stream inactive');
-        callback();
-        callback = function () {};
-      },
-      false
-    );
-    stream.getTracks().forEach(function (track) {
-      track.addEventListener(
-        'ended',
-        function () {
-          console.log('track ended');
-          callback();
-          callback = function () {};
-        },
-        false
-      );
-      track.addEventListener(
-        'inactive',
-        function () {
-          console.log('track inactive');
-          callback();
-          callback = function () {};
-        },
-        false
-      );
+  const main = async () => {
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+      audio: true,
+      video: true,
     });
-  }
 
-  let recorder;
-  let recording = [];
+    stream.addEventListener('inactive', (e) => {
+      setTimeout(() => {
+        const blob = new Blob(recording, { type: 'video/webm' });
+        download(blob);
+      });
+    });
 
-  function handleDataAvailable(event) {
-    if (event.data.size > 0) {
-      recording.push(event.data);
-    }
-  }
+    const recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+    recorder.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        recording.push(event.data);
+      }
+    };
+    recorder.start();
 
-  function download(blob) {
+    const recording = [];
+  };
+
+  main();
+
+  const addStreamEndListener = (stream, callback) => {
+    // stream.addEventListener('ended', callback);
+    stream.addEventListener('inactive', callback);
+    // stream.getTracks().forEach((track) => {
+    //   track.addEventListener('ended', callback);
+    //   track.addEventListener('inactive', callback);
+    // });
+  };
+
+  const download = (blob) => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     document.body.appendChild(a);
@@ -58,28 +43,5 @@
     a.download = Date.now().toString(36);
     a.click();
     window.URL.revokeObjectURL(url);
-  }
-
-  function stop() {
-    recorder.stop();
-    setTimeout(() => {
-      const blob = new Blob(recording, { type: 'video/webm' });
-      download(blob);
-    });
-  }
-
-  async function start() {
-    const stream = await navigator.mediaDevices.getDisplayMedia({
-      audio: true,
-      video: true,
-    });
-
-    addStreamStopListener(stream, stop);
-
-    recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
-    recorder.ondataavailable = handleDataAvailable;
-    recorder.start();
-  }
-
-  start();
+  };
 </script>
