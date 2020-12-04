@@ -5,7 +5,7 @@
       video: true,
     });
 
-    stream.addEventListener('inactive', (e) => {
+    stream.addEventListener('ended', (e) => {
       setTimeout(() => {
         const blob = new Blob(recording, { type: 'video/webm' });
         download(blob);
