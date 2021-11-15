@@ -1,0 +1,65 @@
+<style>
+  body {
+    margin: 0;
+    font-size: 50px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    height: 100vh;
+
+    place-content: center;
+    place-items: center;
+
+    text-align: center;
+  }
+</style>
+
+<div contenteditable="true" id="title"></div>
+<button onclick="main()">Start</button>
+
+<script>
+  const download = (blob) => {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = Date.now().toString(36);
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const addStreamEndListener = (stream, callback) => {
+    stream.addEventListener('inactive', () => setTimeout(callback));
+    // stream.addEventListener('ended', callback);
+    // stream.getTracks().forEach((track) => {
+    //   track.addEventListener('ended', callback);
+    //   track.addEventListener('inactive', callback);
+    // });
+  };
+
+  document.getElementById('title').textContent =
+    'Screencast ' + new Date().toISOString().slice(0, 10);
+
+  const main = async () => {
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+      audio: true,
+      video: true,
+    });
+
+    const recording = [];
+
+    addStreamEndListener(stream, (e) => {
+      console.log('Ended...');
+      download(new Blob(recording, { type: 'video/webm;codecs=h264' }));
+    });
+
+    const recorder = new MediaRecorder(stream, {
+      mimeType: 'video/webm;codecs=h264',
+    });
+    recorder.ondataavailable = (event) => {
+      if (event.data) {
+        recording.push(event.data);
+      }
+    };
+    recorder.start();
+  };
+</script>
