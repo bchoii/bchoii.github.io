@@ -1,0 +1,86 @@
+<style>
+  * {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  button {
+    width: 100%;
+    padding: 20px;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 10px 100px;
+  }
+</style>
+
+<textarea id="full2"></textarea><br />
+<textarea id="full"></textarea><br />
+<textarea id="special"></textarea><br />
+<textarea id="small"></textarea><br />
+
+<script>
+  const charsSmall = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  const charsLarge = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const charsNumerical = '0123456789'.split('');
+  const charsSpecial = '~!@#$%^&*'.split('');
+
+  function shuffle(array) {
+    return array.sort(() => 0.5 - Math.random());
+  }
+
+  function r(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  }
+
+  function generateFromSources(sources, length) {
+    const all = sources.flat();
+
+    // at least one character from each source;
+    const passcode1 = sources.map((source) => r(source));
+
+    const passcode2 = Array(length - sources.length - 1)
+      .fill()
+      .map((_) => r(all));
+
+    const result = [
+      r(charsSmall),
+      ...shuffle([...passcode1, ...passcode2]),
+    ].join('');
+
+    console.log(result.length, length);
+    return result;
+  }
+
+  function main() {
+    document.getElementById('full2').textContent = generateFromSources(
+      [charsSmall, charsLarge, charsNumerical],
+      64
+    );
+    document.getElementById('full').textContent = generateFromSources(
+      [charsSmall, charsLarge, charsNumerical],
+      32
+    );
+    document.getElementById('special').textContent = generateFromSources(
+      [charsSmall, charsLarge, charsNumerical, charsSpecial],
+      16
+    );
+    document.getElementById('small').textContent = generateFromSources(
+      [charsSmall, charsNumerical],
+      8
+    );
+    // alert(test);
+  }
+
+  main();
+
+  ['full2', 'full', 'special', 'small']
+    .map((id) => document.getElementById(id))
+    .forEach((element) => {
+      element.onclick = function () {
+        element.select();
+        document.execCommand('copy');
+      };
+    });
+</script>
