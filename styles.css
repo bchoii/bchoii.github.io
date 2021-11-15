@@ -1,0 +1,328 @@
+/* @import url('https://unpkg.com/sanitize.css'); */
+/* @import url('https://unpkg.com/@csstools/normalize.css'); */
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
+
+body {
+  display: grid;
+  /* padding: 0; */
+  /* margin: auto; */
+  /* text-align: center; */
+  /* align-items: center; */
+  align-content: center;
+  /* justify-items: center; */
+  justify-content: center;
+}
+
+body,
+select,
+button,
+input,
+textarea {
+  font-size: 16px;
+  font-family: 'Quicksand', 'Raleway', -apple-system, BlinkMacSystemFont, Avenir,
+    'Avenir Next', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+input,
+select {
+  line-height: 32px;
+}
+
+input,
+select,
+textarea {
+  padding: 0px 10px;
+}
+
+select {
+  height: 38px;
+}
+
+textarea {
+  display: flex;
+  /* vertical-align: baseline; */
+  height: 100px;
+  width: 100%;
+  max-width: 100%;
+}
+
+img {
+  vertical-align: top;
+  object-fit: cover;
+}
+
+pre,
+code {
+  /* max-height: 400px; */
+  /* max-width: 100vw; */
+  /* overflow: hidden; */
+  text-overflow: ellipsis;
+  color: #333;
+  background: #eee;
+  font-size: 0.7em;
+  margin: 0;
+  text-align: left;
+  word-break: break-word;
+  white-space: pre-wrap;
+  display: block;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    /* transform: scale(0.9); */
+  }
+  to {
+    opacity: 1;
+    /* transform: scale(1); */
+  }
+}
+
+[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+progress {
+  display: block;
+  width: 100%;
+  height: 3px;
+}
+
+[tooltip]:hover {
+  position: relative;
+}
+
+[tooltip]:hover:after {
+  content: attr(tooltip);
+  position: absolute;
+  left: 0;
+  top: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+ul {
+  margin: 0;
+}
+
+table {
+  margin: auto;
+}
+
+table.striped {
+  border-spacing: 0;
+  border: 1px solid #ddd;
+}
+
+table.striped th {
+  font-size: 12px;
+  color: #333;
+  text-transform: uppercase;
+  background-color: #eee;
+}
+
+table.striped td {
+  /* font-weight: bold; */
+}
+
+table.striped th,
+table.striped td {
+  padding: 0.5em;
+  border-bottom: 1px solid #eee;
+}
+
+table.striped th > * {
+  margin: auto 0.2em;
+}
+
+table.striped a,
+table.striped button {
+  margin: auto 0.2em;
+}
+
+table {
+  min-width: 400px;
+}
+
+table td {
+  /* vertical-align: baseline; */
+  max-width: 300px;
+  word-break: break-all;
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
+  text-overflow: ellipsis;
+}
+
+table.numbered {
+  counter-reset: rowNumber;
+}
+
+table.numbered td {
+  vertical-align: baseline;
+  /* vertical-align: top; */
+}
+
+table.numbered tr > td:first-child {
+  counter-increment: rowNumber;
+  text-align: right;
+}
+
+table.numbered tr td:first-child::before {
+  content: counter(rowNumber) '. ';
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+
+button {
+  cursor: pointer;
+}
+
+.button {
+  appearance: button;
+  display: inline-block;
+  text-decoration: none;
+  color: black;
+  background: #efefef;
+
+  border: 0.1px solid #767676;
+  padding: 3px 8px;
+  /* margin: 5px; */
+  /* border-radius: 1px; */
+  /* box-shadow: 0px 3px 5px #ccc; */
+
+  /* transition: all 200ms ease-in-out; */
+}
+
+.button:hover {
+  background: #dfdfdf;
+  /* transform: translateY(-3px); */
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35); */
+}
+
+.background {
+  background: linear-gradient(
+      -20deg,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(255, 255, 255, 1) 100%
+    ),
+    url('/assets/background.png') no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
+
+*:focus {
+  outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0.1em 0;
+}
+
+.error {
+  padding: 10px;
+  color: red;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, min(350px, 100%));
+  padding: 10px;
+  margin: auto;
+
+  justify-content: center;
+  gap: 5px;
+}
+
+.grid > * {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  justify-items: start;
+  align-items: start;
+}
+
+.grid > * > * {
+  text-align: start;
+  /* padding: 3px; */
+  /* line-height: 32px; */
+}
+
+.grid > * > ::first-line {
+  line-height: 32px;
+}
+
+.grid > * > :first-child {
+  font-size: 12px;
+  text-align: right;
+  color: #888;
+  text-transform: uppercase;
+  justify-self: end;
+  border-right: 1px dashed #888;
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
+.link {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  text-align: left;
+  line-height: normal;
+}
+
+.link:active {
+  color: red;
+}
+
+.link:hover,
+.link:focus {
+  color: black;
+}
+
+/* https://web.dev/centering-in-css/ */
+
+svg {
+  cursor: default;
+  user-select: none;
+}
+
+/* br {
+  content: '';
+  display: block;
+  margin: 1em;
+} */
+
+a {
+  white-space: nowrap;
+}
