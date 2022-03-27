@@ -18,7 +18,6 @@
 <textarea id="full2"></textarea><br />
 <textarea id="full"></textarea><br />
 <textarea id="special"></textarea><br />
-<textarea id="small"></textarea><br />
 
 <script>
   const charsSmall = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -64,18 +63,14 @@
     );
     document.getElementById('special').textContent = generateFromSources(
       [charsSmall, charsLarge, charsNumerical, charsSpecial],
-      16
-    );
-    document.getElementById('small').textContent = generateFromSources(
-      [charsSmall, charsNumerical],
-      8
+      32
     );
     // alert(test);
   }
 
   main();
 
-  ['full2', 'full', 'special', 'small']
+  ['full2', 'full', 'special']
     .map((id) => document.getElementById(id))
     .forEach((element) => {
       element.onclick = function () {
