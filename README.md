@@ -1,7 +1,6 @@
 # Bernard Choi Kok Yew (Bernard Xu Guoyao)
 
 https://bchoii.github.io/ \
-https://www.reddit.com/user/bchoii
 
 # Work Experience
 
