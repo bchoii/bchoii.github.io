@@ -17,6 +17,7 @@
 
 <textarea id="full2"></textarea><br />
 <textarea id="full"></textarea><br />
+<textarea id="short"></textarea><br />
 <textarea id="special"></textarea><br />
 
 <script>
@@ -61,6 +62,10 @@
       [charsSmall, charsLarge, charsNumerical],
       32
     );
+    document.getElementById('short').textContent = generateFromSources(
+      [charsSmall, charsLarge, charsNumerical],
+      16
+    );
     document.getElementById('special').textContent = generateFromSources(
       [charsSmall, charsLarge, charsNumerical, charsSpecial],
       32
@@ -70,7 +75,7 @@
 
   main();
 
-  ['full2', 'full', 'special']
+  ['full2', 'full', 'short', 'special']
     .map((id) => document.getElementById(id))
     .forEach((element) => {
       element.onclick = function () {
