@@ -37,7 +37,7 @@
   };
 
   document.getElementById('title').textContent =
-    'Screencast ' + new Date().toISOString().slice(0, 10);
+    new Date().toISOString().slice(0, 10);
 
   const main = async () => {
     const stream = await navigator.mediaDevices.getDisplayMedia({
