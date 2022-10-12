@@ -1,0 +1,112 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Image",
+      "type": "shell",
+      "command": "mspaint",
+      "args": ["${file}"],
+      "options": { "cwd": "${fileDirname}" }
+    },
+    {
+      "label": "Html",
+      "type": "shell",
+      "command": "start",
+      "args": ["chrome", "${file}"],
+      "options": { "cwd": "${fileDirname}" }
+    },
+    {
+      "label": "Powershell",
+      "type": "shell",
+      "command": "powershell",
+      "args": ["-ExecutionPolicy", "Bypass", "${file}"],
+      "options": { "cwd": "${fileDirname}" },
+      "runOptions": { "instanceLimit": 4 }
+    },
+    {
+      "label": "Cmd",
+      "type": "shell",
+      "command": "cmd",
+      "args": ["/c", "${file}"],
+      "options": { "cwd": "${fileDirname}" },
+      "runOptions": { "instanceLimit": 4 }
+    },
+    {
+      "label": "Open",
+      "type": "shell",
+      "command": "start",
+      "args": ["${file}"],
+      "options": { "cwd": "${fileDirname}" },
+      "runOptions": { "instanceLimit": 4 }
+    },
+    {
+      "label": "Typescript",
+      "type": "shell",
+      "command": "node",
+      "args": [
+        // https://github.com/esbuild-kit/tsx
+        "--loader",
+        "tsx",
+        // https://github.com/esbuild-kit/esm-loader
+        // "--loader",
+        // "@esbuild-kit/esm-loader",
+        // https://github.com/antfu/esbuild-node-loader
+        // "--experimental-loader",
+        // "esbuild-node-loader",
+        // "-r",
+        // "@swc-node/register",
+        // "-r",
+        // "ts-node/register",
+        // "-r",
+        // "esbuild-register",
+        // "--loader",
+        // "ts-node/esm",
+        // "--experimental-specifier-resolution",
+        // "node",
+        // "--no-warnings",
+        // "--experimental-modules",
+        "${fileBasename}"
+      ],
+      "options": { "cwd": "${fileDirname}" },
+      "runOptions": { "instanceLimit": 4 }
+    },
+    {
+      "label": "Javascript",
+      "type": "shell",
+      "command": "node",
+      "args": ["${fileBasename}"],
+      "options": { "cwd": "${fileDirname}" },
+      "runOptions": { "instanceLimit": 4 }
+    }
+    // {
+    //   "label": "Terminate",
+    //   "type": "shell",
+    //   "command": "echo ${input:terminate}"
+    // }
+    // {
+    //   "label": "TPowershell",
+    //   "dependsOrder": "sequence",
+    //   "dependsOn": ["Terminate", "Powershell"]
+    // },
+    // {
+    //   "label": "TCmd",
+    //   "dependsOrder": "sequence",
+    //   "dependsOn": ["Terminate", "Cmd"]
+    // },
+    // {
+    //   "label": "TNode",
+    //   "dependsOrder": "sequence",
+    //   "dependsOn": ["Terminate", "Node"]
+    // },
+  ]
+  // "inputs": [
+  //   {
+  //     "id": "terminate",
+  //     "type": "command",
+  //     "command": "workbench.action.tasks.terminate",
+  //     "args": "terminateAll"
+  //   }
+  // ]
+}

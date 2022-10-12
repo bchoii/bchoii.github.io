@@ -15,7 +15,7 @@
 </style>
 
 <div contenteditable="true" id="title"></div>
-<button onclick="main()">Start</button>
+<button onclick="start()">Start Capture</button>
 
 <script>
   const download = (blob) => {
@@ -30,8 +30,13 @@
   document.getElementById("title").textContent =
     "Screencast " + new Date().toISOString().slice(0, 10);
 
-  const main = async () => {
-    const stream = await navigator.mediaDevices.getDisplayMedia();
+  const start = async () => {
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+      video: {
+        cursor: "always",
+      },
+      audio: true,
+    });
     const recorder = new MediaRecorder(stream);
     recorder.ondataavailable = (e) => download(e.data);
     recorder.start();
