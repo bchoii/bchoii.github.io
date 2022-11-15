@@ -3,46 +3,77 @@
   // for the documentation about the tasks.json format
   "version": "2.0.0",
   "tasks": [
+    // {
+    //   "label": "addLog",
+    //   "dependsOrder": "sequence",
+    //   "dependsOn": ["addLog1", "addLog2"]
+    // },
+    // {
+    //   "key": "ctrl+shift+l",
+    //   "command": "editor.action.insertLineAfter",
+    //   "when": "editorTextFocus"
+    // },
+    // {
+    //   "key": "ctrl+shift+l",
+    //   "when": "editorTextFocus",
+    // }
+    // {
+    //   "label": "addLog1",
+    //   "command": "${command:editor.action.insertLineAfter}"
+    // },
+    // {
+    //   "label": "addLog2",
+    //   "command": "${command:editor.action.insertSnippet}",
+    //   "args": ["console.log('${TM_SELECTED_TEXT}', ${TM_SELECTED_TEXT})$0"]
+    // },
     {
-      "label": "Image",
+      "label": "image",
       "type": "shell",
       "command": "mspaint",
       "args": ["${file}"],
       "options": { "cwd": "${fileDirname}" }
     },
     {
-      "label": "Html",
+      "label": "html",
       "type": "shell",
       "command": "start",
       "args": ["chrome", "${file}"],
       "options": { "cwd": "${fileDirname}" }
     },
     {
-      "label": "Powershell",
+      "label": "powershell",
       "type": "shell",
       "command": "powershell",
       "args": ["-ExecutionPolicy", "Bypass", "${file}"],
       "options": { "cwd": "${fileDirname}" },
-      "runOptions": { "instanceLimit": 4 }
+      "runOptions": { "instanceLimit": 3 }
     },
     {
-      "label": "Cmd",
+      "label": "cmd",
       "type": "shell",
       "command": "cmd",
       "args": ["/c", "${file}"],
       "options": { "cwd": "${fileDirname}" },
-      "runOptions": { "instanceLimit": 4 }
+      "runOptions": { "instanceLimit": 3 }
     },
     {
-      "label": "Open",
+      "label": "open",
       "type": "shell",
       "command": "start",
       "args": ["${file}"],
       "options": { "cwd": "${fileDirname}" },
-      "runOptions": { "instanceLimit": 4 }
+      "runOptions": { "instanceLimit": 3 }
     },
     {
-      "label": "Typescript",
+      "label": "javascript",
+      "type": "shell",
+      "command": "node",
+      "args": ["${fileBasename}"],
+      "options": { "cwd": "${fileDirname}" },
+      "runOptions": { "instanceLimit": 3 }
+    },
+    {
+      "label": "typescript",
       "type": "shell",
       "command": "node",
       "args": [
@@ -70,15 +101,7 @@
         "${fileBasename}"
       ],
       "options": { "cwd": "${fileDirname}" },
-      "runOptions": { "instanceLimit": 4 }
-    },
-    {
-      "label": "Javascript",
-      "type": "shell",
-      "command": "node",
-      "args": ["${fileBasename}"],
-      "options": { "cwd": "${fileDirname}" },
-      "runOptions": { "instanceLimit": 4 }
+      "runOptions": { "instanceLimit": 3 }
     }
     // {
     //   "label": "Terminate",
