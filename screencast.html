@@ -36,9 +36,7 @@
 
   const start = async () => {
     const stream = await navigator.mediaDevices.getDisplayMedia({
-      video: {
-        cursor: "always",
-      },
+      video: { cursor: "always" },
       audio: true,
     });
     const options = { mimeType: `image/gif` };
