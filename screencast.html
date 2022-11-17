@@ -17,9 +17,6 @@
 <div contenteditable="true" id="title"></div>
 <button onclick="start()">Start Capture</button>
 
-<script src="https://cdn.webrtc-experiment.com/MediaStreamRecorder.js"></script>
-<script src="https://cdn.webrtc-experiment.com/gif-recorder.js"></script>
-
 <script>
   const download = (blob) => {
     const url = URL.createObjectURL(blob);
@@ -39,7 +36,7 @@
       video: { cursor: "always" },
       audio: true,
     });
-    const options = { mimeType: `image/gif` };
+    const options = { mimeType: `video/webm;codecs=vp9` };
     const recorder = new MediaRecorder(stream, options);
     recorder.ondataavailable = (e) => download(e.data);
     recorder.start();
