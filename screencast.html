@@ -25,6 +25,7 @@
     a.download = Date.now().toString(36);
     a.click();
     URL.revokeObjectURL(url);
+    // document.write('<a href="' + url + '">' + url + "</a>");
   };
 
   document.getElementById("title").textContent =
@@ -32,9 +33,7 @@
 
   const start = async () => {
     const stream = await navigator.mediaDevices.getDisplayMedia({
-      video: {
-        cursor: "always",
-      },
+      video: { cursor: "always" },
       audio: true,
     });
     const options = { mimeType: `video/webm;codecs=vp9` };
