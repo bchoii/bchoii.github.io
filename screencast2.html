@@ -1,0 +1,102 @@
+<style>
+  body {
+    margin: 0;
+    font-size: 50px;
+    font-family: Verdana;
+
+    display: grid;
+
+    place-content: center;
+    place-items: center;
+  }
+  button {
+    padding: 20px 50px;
+  }
+</style>
+
+<div contenteditable="true" id="title"></div>
+<button onclick="start()">Start Capture</button>
+<button onclick="stop()">Stop Capture</button>
+
+<script>
+  const mergeAudioStreams = (...streams) => {
+    const context = new AudioContext();
+
+    const destination = context.createMediaStreamDestination();
+    const connections = streams
+      .map((stream) => {
+        try {
+          const source = context.createMediaStreamSource(stream);
+          const gain = context.createGain();
+          gain.gain.value = 0.7;
+          const connection = source.connect(gain).connect(destination);
+          return connection;
+        } catch (error) {}
+      })
+      .filter(Boolean);
+
+    return connections.length ? destination.stream.getAudioTracks() : [];
+  };
+
+  const download = (blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = Date.now().toString(36);
+    a.click();
+    URL.revokeObjectURL(url);
+    // document.write('<a href="' + url + '">' + url + "</a>");
+  };
+
+  document.getElementById("title").textContent =
+    "Screencast " + new Date().toISOString().slice(0, 10);
+
+  let desktopStream;
+  let voiceStream;
+  let recorder;
+  let mediaStream;
+
+  const start = async () => {
+    desktopStream = await navigator.mediaDevices.getDisplayMedia({
+      video: true,
+      audio: true,
+    });
+    console.log({ desktopStream });
+    try {
+      voiceStream = await navigator.mediaDevices.getUserMedia({
+        video: false,
+        audio: true,
+      });
+      console.log({ voiceStream });
+    } catch (error) {}
+
+    const tracks = [
+      ...desktopStream.getVideoTracks(),
+      ...mergeAudioStreams(desktopStream, voiceStream),
+    ];
+
+    mediaStream = new MediaStream(tracks);
+
+    recorder = new MediaRecorder(mediaStream, {
+      mimeType: "video/webm;codecs=h264,opus",
+    });
+
+    const blobs = [];
+    recorder.ondataavailable = (e) => blobs.push(e.data);
+    recorder.start();
+    recorder.onstop = () => {
+      const blob = new Blob(blobs, { type: "video/webm" });
+      download(blob);
+    };
+  };
+
+  const stop = async () => {
+    for (const stream of [desktopStream, voiceStream]) {
+      stream?.getAudioTracks().forEach((track) => {
+        track.stop();
+      });
+    }
+
+    mediaStream?.getTracks().forEach((s) => s.stop());
+  };
+</script>

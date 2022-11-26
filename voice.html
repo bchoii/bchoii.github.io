@@ -16,39 +16,33 @@
 
 <div contenteditable="true" id="title"></div>
 <button onclick="start()">Start Capture</button>
+<button onclick="stop()">Stop Capture</button>
 
 <script>
   const download = (blob) => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = Date.now().toString(36);
+    a.download = Date.now().toString(36) + ".mp3";
     a.click();
     URL.revokeObjectURL(url);
     // document.write('<a href="' + url + '">' + url + "</a>");
   };
 
   document.getElementById("title").textContent =
-    "Screencast " + new Date().toISOString().slice(0, 10);
+    "Voice " + new Date().toISOString().slice(0, 10);
+
+  let recorder;
 
   const start = async () => {
-    const stream = await navigator.mediaDevices.getDisplayMedia({
-      video: { cursor: "always" },
-      audio: true,
-    });
-
-    const types = [
-      "video/mp4;codecs=h264,aac",
-      "video/webm;codecs=h264,opus",
-      "video/webm;codecs=vp9,opus",
-      "video/webm;codecs=vp8,opus",
-      "video/webm;codecs=vp9",
-      "video/webm;codecs=vp8",
-    ];
-    const mimeType = types.find((t) => MediaRecorder.isTypeSupported(t));
-    console.log(mimeType);
-    const recorder = new MediaRecorder(stream, { mimeType });
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const options = { mimeType: `video/webm;codecs=vp9` };
+    recorder = new MediaRecorder(stream, options);
     recorder.ondataavailable = (e) => download(e.data);
     recorder.start();
+  };
+
+  const stop = async () => {
+    recorder.stop();
   };
 </script>
