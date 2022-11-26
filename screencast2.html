@@ -61,13 +61,11 @@
       video: true,
       audio: true,
     });
-    console.log({ desktopStream });
     try {
       voiceStream = await navigator.mediaDevices.getUserMedia({
         video: false,
         audio: true,
       });
-      console.log({ voiceStream });
     } catch (error) {}
 
     const tracks = [
