@@ -16,7 +16,7 @@
 
 <div contenteditable="true" id="title"></div>
 <button onclick="start()">Start Capture</button>
-<button onclick="stop()">Stop Capture</button>
+<!-- <button onclick="stop()">Stop Capture</button> -->
 
 <script>
   const mergeAudioStreams = (...streams) => {
@@ -74,6 +74,9 @@
     ];
 
     mediaStream = new MediaStream(tracks);
+
+    // user clicked on "Stop Sharing"
+    mediaStream.getVideoTracks()[0].onended = () => stop();
 
     recorder = new MediaRecorder(mediaStream, {
       mimeType: "video/webm;codecs=h264,opus",
